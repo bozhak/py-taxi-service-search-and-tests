@@ -41,7 +41,7 @@ class CarSearchFormTest(TestCase):
         self.assertEqual(form.fields["model"].label, "")
 
     def test_form_is_too_long(self):
-        form = CarSearchForm()
+        form = CarSearchForm(data={"model": "A" * 256})
         self.assertFalse(form.is_valid())
 
 
@@ -65,7 +65,7 @@ class DriverSearchFormTest(TestCase):
 
 class ValidateLicenseNumberTest(TestCase):
     def test_valid_license_number(self):
-        self.assertTrue(validate_license_number("ABC12345"), "ABC12345")
+        self.assertEqual(validate_license_number("ABC12345"), "ABC12345")
 
     def test_license_number_length(self):
         with self.assertRaises(ValidationError):
